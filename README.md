@@ -189,6 +189,7 @@ Using the Splunk user ensures that all operations are run with the proper permis
     ```bash
     sudo ./splunk enable boot-start -user splunk
     ```
+![20splunkenable](Splunk/20splunkenable.png)
 
 13. Finally, your Splunk server is up and running!  
     On your host machine, open a browser and type the following to access the Splunk web interface:  
@@ -198,5 +199,7 @@ Using the Splunk user ensures that all operations are run with the proper permis
     Replace `<ip>` with the static IP address of your Splunk server.  
 
     Log in using the username and password you created during the Splunk setup.
+
+![21splunk](Splunk/21splunk.png)
 
 ---
