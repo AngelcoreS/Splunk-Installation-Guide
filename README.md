@@ -115,34 +115,60 @@ sudo netplan apply
 ## Step 5: Install Splunk  
 
 1. First, download Splunk. You'll need to create an account. Once logged in, navigate to **Products** and click on **Get My Free Trial**.  
+
+![14Splunkdownloading](Splunk/14Splunkdownloading.png)
+
 2. Select **Linux** as your platform and copy the `wget` link for the `.deb` package.  
+
+![15download](Splunk/15download.png)
+
 3. If you already installed SSH during the Ubuntu Server installation, you can skip the next 4 steps.  
+
 4. To install SSH manually, run the following command:  
    ```bash
    sudo apt install openssh-server
+
 5. Check if SSH is running by using the following command:
    ```bash
    sudo systemctl status ssh
+
+
 6. Enable SSH to start on boot:
    ```bash
    sudo systemctl enable ssh
+
+
 7. Check if the Ubuntu firewall (UFW) is active:
     ```bash
    sudo ufw status
+
+![16ssh](Splunk/16ssh.png)
+
 8. Now you can SSH into your server using Command Prompt, PowerShell, or Git Bash:
    ```bash
    ssh <username>@<ubuntu-ip>
+   ```
 Enter the server password when prompted. This allows you to manage the server remotely.
+
+Use the wget link copied earlier and paste it in the terminal
+
+![17installsplunk](Splunk/17installsplunk.png)
 
 Note: I couldn't get the additional guest drivers for VirtualBox to work, so I used this method to copy the Splunk URL directly.
 
-10. Use the wget link copied earlier and install Splunk with the following command:
+10. Install Splunk with the following command:
     ```bash
     sudo dpkg -i <splunk-deb-file>
+    
+![18dpkg](Splunk/18dpkg.png)
+
 11. Navigate to the Splunk installation directory and list the files:
     ```bash
     cd /opt/splunk
     ls -la
+
+![19splunkstart](Splunk/19splunkstart.png)
+
 12. Start Splunk by switching to the Splunk user and navigating to the bin directory:
     ```bash
     sudo -u splunk bash
