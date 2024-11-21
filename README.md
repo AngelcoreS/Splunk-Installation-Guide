@@ -156,25 +156,47 @@ Use the wget link copied earlier and paste it in the terminal
 
 Note: I couldn't get the additional guest drivers for VirtualBox to work, so I used this method to copy the Splunk URL directly.
 
-10. Install Splunk with the following command:
+9. Install Splunk with the following command:
     ```bash
     sudo dpkg -i <splunk-deb-file>
     
 ![18dpkg](Splunk/18dpkg.png)
 
-11. Navigate to the Splunk installation directory and list the files:
+10. Navigate to the Splunk installation directory and list the files:
     ```bash
     cd /opt/splunk
     ls -la
 
-![19splunkstart](Splunk/19splunkstart.png)
 
-12. Start Splunk by switching to the Splunk user and navigating to the bin directory:
+11. Start Splunk by switching to the Splunk user and navigating to the bin directory:
     ```bash
     sudo -u splunk bash
     cd bin
     ./splunk start
 
+![19splunkstart](Splunk/19splunkstart.png)
+
 Using the Splunk user ensures that all operations are run with the proper permissions and security configurations specifically set for Splunk, avoiding potential issues with file ownership and execution.
 
+**It will ask for a username and password. These can be different, but make sure to remember them as you will need them to access Splunk**
 
+12. Now exit from the Splunk user and navigate to the `bin` directory:  
+    ```bash
+    exit
+    cd /opt/splunk/bin/
+    ```  
+    Use the following command to enable Splunk to start on boot:  
+    ```bash
+    sudo ./splunk enable boot-start -user splunk
+    ```
+
+13. Finally, your Splunk server is up and running!  
+    On your host machine, open a browser and type the following to access the Splunk web interface:  
+    ```plaintext
+    <ip>:8000
+    ```  
+    Replace `<ip>` with the static IP address of your Splunk server.  
+
+    Log in using the username and password you created during the Splunk setup.
+
+---
