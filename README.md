@@ -62,10 +62,12 @@ Ubuntu Server is lightweight and efficient, designed specifically for server env
 
 ## Step 3: Update and Upgrade the System  
 1. Log in with your username and password.  
+
 2. Run the following commands:  
    ```bash
    sudo apt update && sudo apt upgrade -y
 
+![11update](Splunk/11update.png)
    
 ## Step 4: Configure a Static IP 
 
@@ -73,7 +75,7 @@ Ubuntu Server is lightweight and efficient, designed specifically for server env
 ```bash 
    ip a
 ```
-   If you’re using a Bridged Adapter, the network should match your host. If you prefer isolation, you can use NAT.
+   If you’re using a Bridged Adapter in your VM, the network should match your host. If you prefer isolation, you can use NAT by changing the settings of the VM in Network > attached to.
    
 2. Edit the Netplan configuration file:
    ```bash
@@ -94,11 +96,20 @@ network:
           - 8.8.4.4
   version: 2
 ```
+![1staticip](Splunk/12.1staticip.png)
+
+**In my case, I am using the UniFi Gateway. Similar routers also allow you to perform this configuration, so you can skip the step below if you have access to and can edit the fixed IP settings of your devices.**
+
+![12staticip](Splunk/12staticip.png)
+
 
 4. Apply the changes:
 ```bash
 sudo netplan apply
 ```
+
+![13netplan](Splunk/13netplan.png)
+
 5. Verify the changes with "ip a" again
 
 ## Step 5: Install Splunk  
