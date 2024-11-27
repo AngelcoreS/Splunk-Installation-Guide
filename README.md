@@ -203,3 +203,54 @@ Using the Splunk user ensures that all operations are run with the proper permis
 ![21splunk](Splunk/21splunk.png)
 
 ---
+
+## Step 6: Send Data to Splunk  
+
+1. **Understanding Data Inputs in Splunk**  
+   Now that Splunk Enterprise is running, we need to send data to the server for indexing and analysis. Splunk's ability to search, filter, and visualize data depends on the data it indexes. This process involves receiving logs or metrics from various devices or applications and making them searchable.  
+
+   For this guide, we’ll configure Splunk to receive logs from a network device — the Dream Machine router. These logs include **Intrusion Prevention System (IPS)** logs and login activity, which are critical for monitoring network security. By forwarding this data to Splunk, we can analyze traffic patterns, detect threats, and review login attempts.  
+
+2. **Configuring the Dream Machine Router to Forward Logs**  
+   To send data to Splunk, configure the Dream Machine router to forward logs:  
+   - Navigate to the router’s **SIEM Server** settings.  
+   - Set the **Server Address** to the IP address of your Splunk server.  
+   - Specify a **Port** for log forwarding. It’s common to use a higher port (e.g., 10154) because Splunk typically requires elevated privileges to listen on ports below 1024.  
+
+   This step ensures that your router sends its syslog data (including IPS and login logs) to the Splunk server for analysis.
+
+![1udp](Splunk/26.1udp.png)
+
+3. **Configuring Splunk to Receive Syslog Data**  
+   On the Splunk server, log in to the Splunk web interface and configure a data input to receive logs:  
+   - Go to **Settings** > **Data Inputs**.  
+   - Select **UDP** as the input method.  
+
+   **Why use UDP and Syslog?**  
+   Syslog is a standardized protocol used for logging system messages and events across a network. It typically uses **UDP** (User Datagram Protocol) on port 514 by default. However, for this setup, we’ll use a custom port, **10154**, to avoid conflicts and maintain flexibility.
+
+![24input](Splunk/24input.png)
+
+
+![25addnew](Splunk/25addnew.png)
+
+4. **Configuring UDP Data Input in Splunk**  
+   In the UDP Data Input configuration:  
+   - Set the **Port** to `10154`.  
+   - For **Source Type**, select `syslog`.  
+   - Set the **App Context** to `Unifi` (or any name representing your Dream Machine logs).  
+   - For **Index**, create a new index (e.g., `ubnt`) by going to **Settings** > **Indexes** and clicking **New Index**.  
+   - Click **Review** and then **Done** to save the configuration.  
+
+   This setup ensures Splunk is ready to receive and index logs forwarded from your Dream Machine router.
+
+![26udp](Splunk/26udp.png)
+
+![27settings](Splunk/27settings.png)
+
+5. **Start Searching for Logs**  
+   Once data is being forwarded and indexed, you can search for it in Splunk using the following query:
+
+  `index=ubnt`
+
+ ![31splunk](Splunk/31splunk.png)
