@@ -81,7 +81,7 @@ Ubuntu Server is lightweight and efficient, designed specifically for server env
    ```bash
    sudo nano /etc/netplan/00-installer-config.yaml
    
-3. Add the following configuration changing the x:
+3. Add the following configuration changing the IP for yours IP:
 ```bash
 network:
   ethernets:
