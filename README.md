@@ -254,3 +254,21 @@ Using the Splunk user ensures that all operations are run with the proper permis
   `index=ubnt`
 
  ![31splunk](Splunk/31splunk.png)
+
+6. **Configure Time Zone**
+
+When analyzing logs, having consistent timestamps is critical for accurate correlation and analysis. If the logs forwarded to Splunk have a different time zone than your Splunk instance, it can cause confusion or lead to incorrect interpretations of the data.
+
+To ensure consistency, you can change the time zone for your Splunk user:  
+   - Navigate to **Settings** > **Users**.  
+   - Select your username from the list.  
+   - Change the **Time Zone** to match the time zone of the forwarded logs or your local time zone.  
+   - Save the changes.
+     
+![29users](Splunk/29users.png)
+
+![30time](Splunk/30time.png)
+
+ ---
+
+## Step 7: Send Data to Splunk  
