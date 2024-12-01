@@ -1,6 +1,8 @@
    
 # Installing Splunk on Ubuntu Server
 
+![40Admin](Splunk/40Admin.png)
+
 ## Introduction  
 Splunk is a powerful tool for analyzing and visualizing machine-generated data. It provides real-time insights, making it ideal for monitoring network activity and security.  
 In this guide, I’ll explain how to install and configure Splunk in my home lab. I’ll be forwarding logs from my Dream Machine router to analyze Intrusion Prevention System (IPS) logs and login activity.  
@@ -319,3 +321,42 @@ To ensure consistency, you can change the time zone for your Splunk user:
    - Verify that the field extraction works as expected and the results align with your intended data.
 
 ---
+
+## Step 8: Create a Dashboard  
+
+Finally, I’m going to create a dashboard that helps me analyze the activity logs forwarded from my Dream Machine router. This dashboard will allow me to monitor Intrusion Prevention System (IPS) logs, login activities, and administrative tasks, providing a clear and dynamic visualization of my network's security posture.
+
+1. **Run a Search Query**  
+   To begin, we need to run a search query that will serve as the basis for our dashboard panel. I’m using the following query to analyze admin activity logs:  
+   ```spl
+   index=ubnt | dedup _time | stats count by Admin_Activity
+
+ ![37aadmin](Splunk/37Aadmin.png)
+
+2. **Visualize the Data**
+
+   - After running the query, click on the Visualization tab.
+   - Select Pie Chart as the visualization type.
+
+ ![38Aadmin](Splunk/38Aadmin.png)
+
+3. **Save the Visualization to a Dashboard**
+
+   - Click Save As > New Dashboard.
+   - Enter the following details:
+   - Dashboard Title: Choose a meaningful title for your dashboard (e.g., "Network Activity Overview").
+   - Description: Provide a short description of the dashboard's purpose (e.g., "Visualizing admin activities and IPS logs from the Dream Machine router.").
+   - Dashboard Studio: Select Dashboard Studio for an enhanced editing experience.
+   - Panel Title: Name the panel (e.g., "Admin Activity Overview").
+   - Click Save to create the dashboard.
+
+4. **Make the Dashboard Dynamic**
+
+   - Open the newly created dashboard.
+   - Click Edit on the data source settings.
+   - Under Time Range Input, select Global Time Range to allow dynamic time filtering for all panels.
+   - Click Apply to save the changes.
+
+ ![Splunk/39Admin.png](Splunk/39Admin.png)
+
+ 
