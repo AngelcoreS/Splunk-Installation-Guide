@@ -138,9 +138,18 @@ sudo netplan apply
    sudo systemctl enable ssh
 
 
-7. Check if the Ubuntu firewall (UFW) is active:
+7. Check if the Ubuntu firewall (UFW) is active: 
     ```bash
    sudo ufw status
+
+if it is not active, you can leave it as it or enable it and allow SSH:
+
+`sudo ufw allow ssh`
+`sudo ufw reload`
+
+Now, we need to allow the Ubuntu server to receive Syslog messages from other devices. In this case, we'll use port 10154 on UDP:
+
+`sudo ufw allow 10154/udp`
 
 ![16ssh](Splunk/16ssh.png)
 
@@ -185,7 +194,7 @@ Using the Splunk user ensures that all operations are run with the proper permis
     exit
     cd /opt/splunk/bin/
     ```  
-    Use the following command to enable Splunk to start on boot:  
+    Use the following command to enable Splunk to start on boot and splunk will run with the user splunk
     ```bash
     sudo ./splunk enable boot-start -user splunk
     ```
@@ -271,4 +280,42 @@ To ensure consistency, you can change the time zone for your Splunk user:
 
  ---
 
-## Step 7: Send Data to Splunk  
+## Step 7: Create a New Field  
+
+1. **Why Create a New Field?**  
+   Creating a new field helps in organizing, filtering, and analyzing data more effectively. For example, if you're analyzing logs from your Dream Machine router, you might want to extract specific information such as login usernames, IP addresses, or intrusion event types. By defining custom fields, you can tailor Splunk's search and analysis capabilities to your specific needs.
+
+2. **Extract a New Field**  
+   - Log in to the Splunk web interface.  
+   - Navigate to the index you want and at right side select Extract New Field 
+   - Select the source data you want to extract fields from.
+  
+![33Admin](Splunk/33Admin.png)
+
+3. **Use Regular Expressions for Specific Data Filters**  
+   - Identify the data you want to extract from the raw logs. For instance, you may want to extract activity related to a specific administrator or event type.  
+   - Click on **Show Regular Expression** to view the current regex or create a new one.  
+
+ ![34Admin](Splunk/34Admin.png)
+
+4. **Edit the Regular Expression**  
+   - For a more precise data filter, you can customize the regex to match your data.  
+   - In my case, I used the following regex to extract specific admin activities:  
+     ```regex
+     \|(?P<Admin_Activity>user[^|]+)\|
+     ```  
+     - `Admin_Activity` is the name of the field being created.  
+     - `user` is the specific activity or value I want to extract.  
+     - `[^|]+` matches everything until the next `|` character.  
+
+ ![36Admin](Splunk/36Admin.png)
+ 
+5. **Save and Test**  
+   - After editing the regex, save your changes.  
+   - Run a search query to test the new field, such as:  
+     ```spl
+     index=ubnt Admin_Activity="user"
+     ```  
+   - Verify that the field extraction works as expected and the results align with your intended data.
+
+---
